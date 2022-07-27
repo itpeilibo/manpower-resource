@@ -5,7 +5,6 @@ const defaultSettings = require('./src/settings.js')
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
-
 const name = defaultSettings.title || 'vue Admin Template' // page title
 
 // If your port is set to 80,

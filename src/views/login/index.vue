@@ -200,6 +200,7 @@ export default {
         this.$router.push({ path: this.redirect || '/' })
         this.loading = false
       } catch (e) {
+        console.log(e)
         this.loading = false
       }
 

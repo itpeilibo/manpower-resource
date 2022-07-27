@@ -1,13 +1,8 @@
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
-      </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
+      <router-link key="collapse" class="sidebar-logo-link" to="/">
+        <img src="@/assets/common/icon.png" class="sidebar-logo  ">
       </router-link>
     </transition>
   </div>
@@ -44,9 +39,9 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
-  background: #2b2f3a;
+  height: 90px;
+  line-height: 90px;
+  //background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
@@ -55,10 +50,15 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
-      width: 32px;
-      height: 32px;
-      vertical-align: middle;
-      margin-right: 12px;
+      //width: 32px;
+      //height: 32px;
+      //vertical-align: middle;
+      //margin-right: 12px;
+        width: 140px;
+        vertical-align: middle;
+        margin-right: 12px;
+        margin-top: -20px;
+      // 大图样式
     }
 
     & .sidebar-title {
@@ -76,7 +76,10 @@ export default {
   &.collapse {
     .sidebar-logo {
       margin-right: 0px;
+      width: 32px;
+      height: 32px;
     }
   }
+  // 小图样式
 }
 </style>
