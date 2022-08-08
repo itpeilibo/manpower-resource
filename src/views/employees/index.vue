@@ -42,8 +42,8 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small" @click="del(row.id)">删除</el-button>
+              <el-button type="text" size="small" @click="btnRoleDialog(row.id)">角色</el-button>
+              <el-button :disabled="checkPermission('DELETE_USER')" type="text" size="small" @click="del(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -65,6 +65,7 @@
             <canvas ref="canvas" />
           </el-row>
         </el-dialog>
+        <AssignRoleVue ref="roleRef" :current-id="currentId" :show-role-dialog.sync="showRoleDialog" />
       </el-card>
     </div>
   </div>
@@ -72,6 +73,8 @@
 
 <script>
 // import ToolBar from '@/components/ToolBar'
+import { mixins } from '@/utils/mixin'
+import AssignRoleVue from '@/views/employees/components/assign-role'
 import { delEmployee, getEmployeeList } from '@/api/employees'
 import EmployeeList from '@/api/constant/employees'
 import AddEmployess from '@/views/employees/components/add-employess'
@@ -89,12 +92,15 @@ const headers = {
 export default {
 
   name: 'Enployees',
-  components: { AddEmployess },
+  components: { AddEmployess, AssignRoleVue },
+  mixins: [mixins],
   data() {
     return {
+      showRoleDialog: false,
       showCodeDialog: false,
       isshowAddEmployess: false,
       list: [],
+      currentId: '',
       total: 0, // 总数
       page: {
         page: 1, // 当前页码
@@ -106,6 +112,12 @@ export default {
     this.getEmpList()
   },
   methods: {
+    // 点击角色按钮
+    async btnRoleDialog(id) {
+      this.currentId = id
+      await this.$refs.roleRef.getUserDetailById(id)
+      this.showRoleDialog = true
+    },
     showQrCode(url) {
       try {
         // console.log(url)

@@ -2,6 +2,7 @@
 // 引入接口的方法
 import { getToken, removeToken, setToken } from '@/utils/auth'
 import { getUserDetailById, getUserInfo, login } from '@/api/user'
+import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(), // 设置token初始状态   token持久化 => 放到缓存中
@@ -39,7 +40,6 @@ const actions = {
     const res = await login(data)
     //  打印接口调用的结果
     console.log(res)
-
     context.commit('setToken', res)
   },
   // 获取用户资料的action
@@ -48,6 +48,10 @@ const actions = {
     const baseInfo = await getUserDetailById(res.userId)
     // 存储到vuex
     context.commit('setUserInfo', { ...res, ...baseInfo })
+    return {
+      ...res,
+      ...baseInfo
+    }
     // return baseResult
   },
   // 退出登录
@@ -55,6 +59,11 @@ const actions = {
     // 清除token用户信息
     context.commit('removeToken')
     context.commit('removeUserInfo')
+    // 重置路由匹配信息
+    resetRouter()
+    // context是根节点的上下文
+    // vuex里面的路由表置空
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 export default {

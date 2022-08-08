@@ -26,7 +26,7 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-
+// 静态路由表
 export const constantRoutes = [
   {
     path: '/login',
@@ -54,16 +54,17 @@ export const constantRoutes = [
       component: () => import('@/views/imports/index'),
       hidden: true
     }]
-  },
+  }
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }), // 管理滚动行为 如果出现滚动 切换就让 让页面回到顶部
-  routes: [...constantRoutes, ...asyncRoutes] // 临时合并所有的路由
+  // routes: [...constantRoutes, ...asyncRoutes] // 临时合并所有的路由
+  routes: [...constantRoutes] // 临时合并所有的路由
 })
 
 const router = createRouter()

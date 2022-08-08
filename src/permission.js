@@ -12,9 +12,22 @@ router.beforeEach(async(to, from, next) => {
   //  首先判断有无token
   const token = store.getters.token
   if (token) {
-    //   如果有token 继续判断是不是去登录页
+    // 获取用户信息
+    // 如果有token 继续判断是不是去登录页
     if (!store.getters.userId) {
-      await store.dispatch('user/getUserInfo')
+      const res = await store.dispatch('user/getUserInfo') // 默认静态路由
+      // 添加用户拥有的路由权限之后,再去做跳转 filterRoutes
+      // console.log(res.roles.menus)
+      // routers筛选以后的结果 >> 用户拥有权限的动态路由列表
+      const routes = await store.dispatch('permission/filterRoutes', res.roles.menus)
+      // 默认情况只有静态路由
+      // 进行动态路由的添加
+      router.addRoutes([...routes,
+        { path: '*', redirect: '/404', hidden: true }])
+      // 重新再进行跳转
+      next(to.path)
+      // console.log(routers)
+      // 筛选出动态路由以后，需要添加router里面,这样的可以访问
     }
     if (to.path === loginPath) {
       //  表示去的是登录页

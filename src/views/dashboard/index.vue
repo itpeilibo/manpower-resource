@@ -6,13 +6,20 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import { mixins } from '@/utils/mixin'
 export default {
   name: 'Dashboard',
+  // 解决逻辑复用
+  mixins: [mixins],
   computed: {
     ...mapGetters([
       'name'
     ])
+  },
+  method() {
+    this.hello()
+  },
+  created() {
   }
 }
 </script>

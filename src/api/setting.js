@@ -2,7 +2,7 @@ import request from '@/utils/request'
 /**
  * 获取角色列表
  * ***/
-export function getRoleList(params) {
+export const getRoleList = (params) => {
   return request({
     url: '/sys/role',
     params
@@ -12,7 +12,7 @@ export function getRoleList(params) {
 /**
  * 获取公司信息
  * **/
-export function getCompanyInfo(companyId) {
+export const getCompanyInfo = (companyId) => {
   return request({
     url: `/company/${companyId}`
   })
@@ -21,7 +21,7 @@ export function getCompanyInfo(companyId) {
  *  删除角色
  *
  * ****/
-export function deleteRole(id) {
+export const deleteRole = (id) => {
   return request({
     url: `/sys/role/${id}`,
     method: 'delete'
@@ -30,7 +30,7 @@ export function deleteRole(id) {
 /** *
  * 修改角色
  * ***/
-export function updateRole(data) {
+export const updateRole = (data) => {
   return request({
     url: `/sys/role/${data.id}`,
     data,
@@ -40,7 +40,7 @@ export function updateRole(data) {
 /**
  * 获取角色详情
  * **/
-export function getRoleDetail(id) {
+export const getRoleDetail = (id) => {
   return request({
     url: `/sys/role/${id}`
   })
@@ -48,10 +48,19 @@ export function getRoleDetail(id) {
 /** *
  * 新增角色
  * ***/
-export function addRole(data) {
+export const addRole = (data) => {
   return request({
     url: '/sys/role',
     data,
     method: 'post'
   })
 }
+// 给角色分配权限
+export const assignPerm = (data) => {
+  return request({
+    url: '/sys/role/assignPrem',
+    method: 'put',
+    data
+  })
+}
+
